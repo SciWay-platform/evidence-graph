@@ -35,6 +35,7 @@ from dataclasses import dataclass, field
 from typing import Any
 
 from evidence_graph.adjudicate import Adjudication, AdjudicationResult, Verdict
+from evidence_graph.biolink import DEFAULT_CATEGORY, category_chain
 
 #: The Biolink Model release this module was written against and verified with.
 BIOLINK_VERSION = "4.4.4"
@@ -230,6 +231,59 @@ def from_adjudications(
     nodes = [_publication_node(by_id[a]) for a in sorted(used_artifacts)]
     edges.sort(key=lambda e: (e["subject"], e["predicate"], e["object"], e["id"]))
     return KgxGraph(tuple(nodes), tuple(edges))
+
+
+def with_concept_mentions(
+    graph: KgxGraph,
+    mentions: list[dict[str, Any]],
+    *,
+    knowledge_source: str = "infores:evidence-graph",
+    agent_type: str = DEFAULT_AGENT_TYPE,
+) -> KgxGraph:
+    """Add grounded concept nodes and document-to-concept edges.
+
+    Unlike the assertion-level relations, this part maps cleanly onto Biolink: `biolink:mentions` is
+    a real predicate, and a grounded concept carries a real category from its CURIE prefix. So these
+    edges are fully Biolink-native and a Translator-ecosystem consumer can use them directly.
+
+    `knowledge_level` is `text_co_occurrence` here and means it: the claim is that the document
+    mentions the concept, which is exactly what was observed.
+
+    Each mention is `{document, curie, label, category, quote, location, chunk_id}`.
+    """
+    nodes = {n["id"]: dict(n) for n in graph.nodes}
+    edges = list(graph.edges)
+    seen: set[tuple[str, str]] = {(e["subject"], e["object"]) for e in edges}
+
+    for mention in sorted(mentions, key=lambda m: (m["document"], m["curie"])):
+        document, curie = mention["document"], mention["curie"]
+        if document not in nodes or (document, curie) in seen:
+            continue
+        seen.add((document, curie))
+        nodes.setdefault(curie, {
+            "id": curie,
+            "category": list(category_chain(mention.get("category") or DEFAULT_CATEGORY)),
+            "name": mention.get("label") or curie,
+            "provided_by": [knowledge_source],
+        })
+        record = {
+            "id": edge_id(document, "biolink:mentions", curie),
+            "subject": document,
+            "predicate": "biolink:mentions",
+            "object": curie,
+            "broad_predicate": BROAD_PREDICATE,
+            "knowledge_level": "text_co_occurrence",
+            "agent_type": agent_type,
+            "primary_knowledge_source": knowledge_source,
+            "supporting_text": [mention["quote"]] if mention.get("quote") else [],
+        }
+        if mention.get("location"):
+            record[f"{EG_PREFIX}:evidence_location"] = [mention["location"]]
+        edges.append(record)
+
+    ordered_nodes = tuple(nodes[k] for k in sorted(nodes))
+    edges.sort(key=lambda e: (e["subject"], e["predicate"], e["object"], e["id"]))
+    return KgxGraph(ordered_nodes, tuple(edges))
 
 
 # --------------------------------------------------------------------------------------------

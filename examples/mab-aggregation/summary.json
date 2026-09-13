@@ -1,0 +1,23 @@
+{
+  "edges": {
+    "candidates": 12185,
+    "asserted": 10684,
+    "abstained": 452,
+    "conflicted": 1049,
+    "coverage": 0.8768
+  },
+  "grounding": {
+    "terms": 431949,
+    "grounded": 3237,
+    "ambiguous": 739,
+    "unmapped": 428712,
+    "coverage": 0.0075
+  },
+  "graph": {
+    "nodes": 1508,
+    "edges": 16357
+  },
+  "open_questions": 452,
+  "kgx_valid": true,
+  "kgx_issues": []
+}

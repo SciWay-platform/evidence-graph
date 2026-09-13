@@ -1,0 +1,97 @@
+[
+  {
+    "key": "PMC11885717|contradicts|PMC12114724|documented",
+    "source": "PMC11885717",
+    "target": "PMC12114724",
+    "type": "contradicts",
+    "quantity": "documented",
+    "score": 4.44,
+    "why_not_asserted": "no evidence cited from PMC12114724",
+    "evidence": [
+      {
+        "artifact_id": "PMC11885717",
+        "chunk_id": "PMC11885717-p0039",
+        "location": "Alkylamine-based ionic liquids, paragraph 39",
+        "source_uri": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC11885717/",
+        "quote": "… suppression of amyloid formation above 10 mol% under high temperatures. In contrast to [EAN][NO3] and [PAN][NO3], which almost exactly matched monomeric insuli",
+        "trigger": "contradicts"
+      }
+    ]
+  },
+  {
+    "key": "PMC11885717|contradicts|PMC9572940|documented",
+    "source": "PMC11885717",
+    "target": "PMC9572940",
+    "type": "contradicts",
+    "quantity": "documented",
+    "score": 4.44,
+    "why_not_asserted": "no evidence cited from PMC9572940",
+    "evidence": [
+      {
+        "artifact_id": "PMC11885717",
+        "chunk_id": "PMC11885717-p0039",
+        "location": "Alkylamine-based ionic liquids, paragraph 39",
+        "source_uri": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC11885717/",
+        "quote": "… suppression of amyloid formation above 10 mol% under high temperatures. In contrast to [EAN][NO3] and [PAN][NO3], which almost exactly matched monomeric insuli",
+        "trigger": "contradicts"
+      }
+    ]
+  },
+  {
+    "key": "PMC12114724|contradicts|PMC11054243|documented",
+    "source": "PMC12114724",
+    "target": "PMC11054243",
+    "type": "contradicts",
+    "quantity": "documented",
+    "score": 4.44,
+    "why_not_asserted": "no evidence cited from PMC11054243",
+    "evidence": [
+      {
+        "artifact_id": "PMC12114724",
+        "chunk_id": "PMC12114724-p0004",
+        "location": "Body, paragraph 4",
+        "source_uri": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12114724/",
+        "quote": "…erapeutics include gene therapy, cell therapy, mRNA therapy, and others. In contrast to conventional small molecules, biologic therapies contain complex macromo",
+        "trigger": "contradicts"
+      }
+    ]
+  },
+  {
+    "key": "PMC12114724|contradicts|PMC11885717|documented",
+    "source": "PMC12114724",
+    "target": "PMC11885717",
+    "type": "contradicts",
+    "quantity": "documented",
+    "score": 4.44,
+    "why_not_asserted": "no evidence cited from PMC11885717",
+    "evidence": [
+      {
+        "artifact_id": "PMC12114724",
+        "chunk_id": "PMC12114724-p0004",
+        "location": "Body, paragraph 4",
+        "source_uri": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12114724/",
+        "quote": "…erapeutics include gene therapy, cell therapy, mRNA therapy, and others. In contrast to conventional small molecules, biologic therapies contain complex macromo",
+        "trigger": "contradicts"
+      }
+    ]
+  },
+  {
+    "key": "PMC12114724|contradicts|PMC12940363|documented",
+    "source": "PMC12114724",
+    "target": "PMC12940363",
+    "type": "contradicts",
+    "quantity": "documented",
+    "score": 4.44,
+    "why_not_asserted": "no evidence cited from PMC12940363",
+    "evidence": [
+      {
+        "artifact_id": "PMC12114724",
+        "chunk_id": "PMC12114724-p0004",
+        "location": "Body, paragraph 4",
+        "source_uri": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12114724/",
+        "quote": "…erapeutics include gene therapy, cell therapy, mRNA therapy, and others. In contrast to conventional small molecules, biologic therapies contain complex macromo",
+        "trigger": "contradicts"
+      }
+    ]
+  }
+]

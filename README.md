@@ -77,18 +77,69 @@ conflict (numeric): the cited sources report different ph values (5.5 vs 7.0)
 No model ran. The contradiction was found by unit-aware numeric comparison, and both halves of it
 are quoted back with their page references so a reader can check the claim against the source.
 
+## A whole corpus
+
+```bash
+# Build a corpus from the PubMed Central Open Access subset on AWS Open Data (no credentials).
+python scripts/fetch_pmc_corpus.py --query "protein aggregation monoclonal antibody formulation" \
+    --name mab-aggregation --limit 45
+
+# Propose, ground, adjudicate, reconcile, export.
+python scripts/run_pipeline.py corpora/mab-aggregation --out build/mab-aggregation
+```
+
+32 open-access papers, 5,333 passages, about 13 seconds, no model and no network:
+
+| | |
+|---|---|
+| candidate edges proposed | 12,185 |
+| asserted | 10,684 |
+| **abstained — the review queue** | **452** |
+| recorded as conflicts rather than resolved | 1,049 |
+| concepts grounded to CURIEs | 3,237 |
+| graph | 1,508 nodes, 16,357 edges, valid KGX |
+
+Real output is in [`examples/mab-aggregation/`](examples/mab-aggregation/), including five of the
+open questions with the passages the adjudicator read and why it was not convinced.
+
 ## What is in it
 
 | Module | What it does |
 |---|---|
 | `evidence` | `RetrievalHit`: a passage plus the provenance needed to cite it. The input type. |
 | `relations` | Proposes typed document→document edges (`supports`, `contradicts`, `decided`, `uses-protocol`) by regex and unit-aware numeric grammar. Each edge carries its evidence. |
-| `conflicts` | Detects numeric disagreement (unit-aware) and documented contradiction between cited passages. High precision by design. |
+| `grounding` | Resolves a surface string to a MONDO, ChEBI, GO, UBERON, CL, HGNC or UniProt CURIE, or refuses. 369,627 terms vendored as 10.8 MB of gzipped TSV. |
+| `biolink` | Biolink Model 4.4.4 categories, predicates, and CURIE typing that declines to guess. |
+| `adjudicate` | The gate: assert, abstain, or record a conflict, over a pluggable scorer. |
+| `conflicts` | Detects numeric disagreement (unit-aware) and documented contradiction between cited passages. |
+| `maintain` | Re-runs without overwriting: per-edge revision history, withdrawal instead of deletion. |
+| `evaluation` | Edge-level precision as a function of abstention, with an SVG renderer. |
+| `kgx` | KGX interchange, TSV and JSON Lines, Biolink-compatible. |
+| `pipeline` | All of the above in one call. |
 | `graph` | Assembles documents, concepts and edges into a `{nodes, edges, stats}` payload. |
-| `ontology` | Types concept terms against a controlled vocabulary. Currently a narrow seed; see Roadmap. |
+| `ontology` | Types concept terms against a small built-in vocabulary. Superseded by `grounding` for biomedical work. |
 | `provenance` | W3C PROV-O derivation records with SHA-256 tamper-evidence (`verify_lineage`). |
 | `fair` | DataCite completeness report, Dublin Core XML, RO-Crate 1.1 JSON-LD. |
 | `ro_crate_validation` | Structural validation of a crate against the RO-Crate 1.1 spec, offline. |
+
+## Three things worth knowing before you use it
+
+**Abstention is an output, not a silence.** `adjudicate` returns assert, abstain or conflict for
+every candidate. Abstained edges keep their evidence and come back through
+`pipeline.open_questions`; they are never dropped. Conflicts are settled by recording both sides,
+not by keeping the higher-scoring one.
+
+**Grounding refuses most strings, and that is the correct behaviour.** Of 431,949 candidate spans in
+the corpus above, 0.75% ground to an identifier. Matching is exact after normalisation with no
+edit-distance fallback, because fuzzy matching at ontology scale grounds `IL-6` to `IL-16`, and a
+wrong identifier is a citation that looks checkable and is not. Ambiguous surfaces come back with
+every candidate rather than resolved by a coin-flip.
+
+**Biolink cannot express these relations, and the export says so.** Biolink is entity-centric: an
+edge *is* a statement, and there is no `supports` or `contradicts` predicate anywhere in the 247
+descendants of `related to`. `kgx` puts the relation in its own namespace and attaches
+`broad_predicate: biolink:related_to` so a Biolink-only consumer can still traverse the graph.
+Grounded concept mentions, by contrast, map cleanly and use `biolink:mentions`.
 
 ## Data shapes
 
@@ -104,6 +155,13 @@ Normalising that is a 1.0 change, so it is documented here rather than fixed qui
 **Chunk** (a passage of one artifact):
 `id`, `artifact_id`, `chunk_text` (or `source_quote`), `source_uri`, `page_or_row_reference`.
 
+## Vendored data
+
+`evidence_graph/data/` holds the vocabulary as gzipped TSV, built by `scripts/build_vocabulary.py`
+from MONDO, GO, ChEBI, UBERON, CL, HGNC and UniProt. That data is **not** covered by this project's
+Apache-2.0 licence: each source keeps its own (CC0, CC BY 4.0, CC BY 3.0). Sources, attributions and
+a statement of the modifications made are in [`evidence_graph/data/NOTICE`](evidence_graph/data/NOTICE).
+
 **RetrievalHit**: see [`evidence.py`](evidence_graph/evidence.py).
 
 ## What it deliberately does not do
@@ -114,22 +172,24 @@ the caller, so the library stays keyless and runs in an air-gapped lab.
 
 It also knows nothing about users, tenants, projects, or requests.
 
-## Roadmap
+## What is missing
 
-The near-term work, in order:
+**A gold standard.** `evaluation` implements and tests the risk-coverage measurement, but no
+labelled edge set exists for the corpus above, so this repository publishes no precision figure.
+Deriving one from the same checks that produced the assertions would be circular. Labelling a
+sample is the next piece of work, and it needs someone to read the sources.
 
-1. **Biomedical grounding.** `ontology` is a small hand-written vocabulary biased toward protein
-   formulation. Replacing it with Biolink Model categories and OBO CURIEs (MONDO, ChEBI, GO,
-   UBERON, CL, HGNC) is the next substantial piece.
-2. **An adjudication layer.** Turning each proposed edge into an explicit assert / abstain /
-   conflict verdict over a scorer `Protocol`, with a deterministic default.
-3. **KGX export**, so a graph built here loads into other tooling.
-4. **Edge-level evaluation**: asserted-edge precision as a function of abstention rate, on a public
-   corpus. This is the number we most want to publish, and the one nobody currently reports.
+**A semantic scorer.** The default `GroundingScorer` verifies that an edge is grounded in the text
+it cites, which is necessary and not sufficient for correctness: a perfectly grounded edge can still
+be a wrong reading of the sentence. `EdgeScorer` is a Protocol precisely so a model can be dropped
+in; the library ships the half that needs no key.
+
+**Better proposers.** Relation extraction is regex and numeric grammar. It is auditable and fast and
+it misses everything stated in prose without a number in it.
 
 ## Status
 
-**0.1.0.dev0.** The API will change and there is no support SLA. It is extracted from
+**0.1.0.** The API will change and there is no support SLA. It is extracted from
 [SciWay](https://sciway.software), a scientific memory workspace, where this code has been running
 in production; the extraction is what makes it independently reviewable and citable.
 

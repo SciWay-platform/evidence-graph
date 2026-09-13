@@ -1,0 +1,25 @@
+id	category	name	xref	provided_by	license	publication_year
+CHEBI:10545	biolink:SmallMolecule|biolink:MolecularEntity|biolink:ChemicalEntity|biolink:NamedThing|biolink:Entity	electron		infores:evidence-graph		
+CHEBI:10588	biolink:SmallMolecule|biolink:MolecularEntity|biolink:ChemicalEntity|biolink:NamedThing|biolink:Entity	1-(3-chlorophenyl)piperazine		infores:evidence-graph		
+CHEBI:128458	biolink:SmallMolecule|biolink:MolecularEntity|biolink:ChemicalEntity|biolink:NamedThing|biolink:Entity	disodium cromoglycate		infores:evidence-graph		
+CHEBI:131189	biolink:SmallMolecule|biolink:MolecularEntity|biolink:ChemicalEntity|biolink:NamedThing|biolink:Entity	glass		infores:evidence-graph		
+CHEBI:131437	biolink:SmallMolecule|biolink:MolecularEntity|biolink:ChemicalEntity|biolink:NamedThing|biolink:Entity	pyrrolobenzodiazepine		infores:evidence-graph		
+CHEBI:131527	biolink:SmallMolecule|biolink:MolecularEntity|biolink:ChemicalEntity|biolink:NamedThing|biolink:Entity	dipotassium hydrogen phosphate		infores:evidence-graph		
+CHEBI:132243	biolink:SmallMolecule|biolink:MolecularEntity|biolink:ChemicalEntity|biolink:NamedThing|biolink:Entity	alpha-D-GlcNS(6S)-(1->4)-beta-D-GlcA-(1->4)-alpha-D-GlcNS(3S,6S)-(1->4)-beta-D-GlcA(2S)-(1->4)-alpha-D-GlcNS(6S)-(1->4)-beta-D-GlcA(2S)-(1->4)-alpha-D-GlcNS(6S)-(1->4)-beta-D-GlcA-O-pNp		infores:evidence-graph		
+CHEBI:132554	biolink:SmallMolecule|biolink:MolecularEntity|biolink:ChemicalEntity|biolink:NamedThing|biolink:Entity	oligomer		infores:evidence-graph		
+CHEBI:132919	biolink:SmallMolecule|biolink:MolecularEntity|biolink:ChemicalEntity|biolink:NamedThing|biolink:Entity	arginine ornithine		infores:evidence-graph		
+CHEBI:133232	biolink:SmallMolecule|biolink:MolecularEntity|biolink:ChemicalEntity|biolink:NamedThing|biolink:Entity	imazamox-ammonium		infores:evidence-graph		
+CHEBI:133305	biolink:SmallMolecule|biolink:MolecularEntity|biolink:ChemicalEntity|biolink:NamedThing|biolink:Entity	sulfoxaflor		infores:evidence-graph		
+CHEBI:134888	biolink:SmallMolecule|biolink:MolecularEntity|biolink:ChemicalEntity|biolink:NamedThing|biolink:Entity	fenyramidol		infores:evidence-graph		
+CHEBI:135445	biolink:SmallMolecule|biolink:MolecularEntity|biolink:ChemicalEntity|biolink:NamedThing|biolink:Entity	canrenone		infores:evidence-graph		
+CHEBI:135709	biolink:SmallMolecule|biolink:MolecularEntity|biolink:ChemicalEntity|biolink:NamedThing|biolink:Entity	exatecan		infores:evidence-graph		
+CHEBI:13643	biolink:SmallMolecule|biolink:MolecularEntity|biolink:ChemicalEntity|biolink:NamedThing|biolink:Entity	glycol		infores:evidence-graph		
+CHEBI:137394	biolink:SmallMolecule|biolink:MolecularEntity|biolink:ChemicalEntity|biolink:NamedThing|biolink:Entity	Alexa Fluor 647		infores:evidence-graph		
+CHEBI:13759	biolink:SmallMolecule|biolink:MolecularEntity|biolink:ChemicalEntity|biolink:NamedThing|biolink:Entity	alkylamine		infores:evidence-graph		
+CHEBI:138703	biolink:SmallMolecule|biolink:MolecularEntity|biolink:ChemicalEntity|biolink:NamedThing|biolink:Entity	HP_dp08_0003		infores:evidence-graph		
+CHEBI:138861	biolink:SmallMolecule|biolink:MolecularEntity|biolink:ChemicalEntity|biolink:NamedThing|biolink:Entity	HT-2 toxin		infores:evidence-graph		
+CHEBI:139322	biolink:SmallMolecule|biolink:MolecularEntity|biolink:ChemicalEntity|biolink:NamedThing|biolink:Entity	poly(ethylene glycol) derivative		infores:evidence-graph		
+CHEBI:139349	biolink:SmallMolecule|biolink:MolecularEntity|biolink:ChemicalEntity|biolink:NamedThing|biolink:Entity	N-(p-amylcinnamoyl)anthranilic acid		infores:evidence-graph		
+CHEBI:140202	biolink:SmallMolecule|biolink:MolecularEntity|biolink:ChemicalEntity|biolink:NamedThing|biolink:Entity	aspirin-triggered protectin D1		infores:evidence-graph		
+CHEBI:140399	biolink:SmallMolecule|biolink:MolecularEntity|biolink:ChemicalEntity|biolink:NamedThing|biolink:Entity	specialised pro-resolving mediator		infores:evidence-graph		
+CHEBI:140618	biolink:SmallMolecule|biolink:MolecularEntity|biolink:ChemicalEntity|biolink:NamedThing|biolink:Entity	castor oil		infores:evidence-graph		
