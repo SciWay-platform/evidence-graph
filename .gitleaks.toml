@@ -1,0 +1,24 @@
+# gitleaks configuration for evidence-graph.
+#
+# The library holds no credentials by design: it never opens a socket and never authenticates, so
+# any secret-shaped string reaching this repo is a mistake. We therefore run the full default rule
+# set and keep the allowlist deliberately small — a broad allowlist is how secret scanning quietly
+# stops working.
+
+title = "evidence-graph"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Documented placeholders only. Add an entry only with a comment saying why it is safe."
+regexes = [
+  # Documentation and test fixtures use obvious non-secrets. These patterns must be self-evidently
+  # fake; never allowlist a string that could plausibly be real.
+  '''(?i)(example|placeholder|dummy|fake|redacted|your[-_]?(key|token|secret)[-_]?here)''',
+  '''^x{8,}$''',
+]
+paths = [
+  '''^LICENSE$''',
+  '''^NOTICE$''',
+]

@@ -1,0 +1,79 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# Least privilege: nothing in this workflow writes to the repository.
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - run: pip install ruff==0.16.7
+      # `ruff check` only. There is deliberately no `ruff format --check`: this code must stay
+      # diffable against its origin in the SciWay codebase, and a wholesale reformat would make
+      # the first round of review impossible to read.
+      - run: ruff check .
+
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        python-version: ["3.11", "3.12", "3.13"]
+        include:
+          # One Windows leg, because the library handles file paths and text encodings and those
+          # are where a "pure stdlib, works everywhere" claim usually turns out to be false.
+          - os: windows-latest
+            python-version: "3.12"
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: ${{ matrix.python-version }}
+      # No install step: the library and its tests are standard-library only. If this line ever
+      # needs a `pip install`, the zero-dependency guarantee has been broken — see the job below.
+      - name: Run test suite
+        run: python -m unittest discover -s tests -v
+
+  no-runtime-deps:
+    # The zero-dependency promise is a design constraint (see pyproject.toml), so it gets a test.
+    # Without one it erodes the first time somebody reaches for a convenience library.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - run: python scripts/check_no_runtime_deps.py
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - run: pip install build twine
+      - run: python -m build
+      # Catches a malformed README or bad metadata before it reaches PyPI, where a release
+      # cannot be replaced, only yanked.
+      - run: twine check dist/*
+      - uses: actions/upload-artifact@v7
+        with:
+          name: dist
+          path: dist/
+          retention-days: 7

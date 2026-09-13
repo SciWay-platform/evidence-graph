@@ -1,0 +1,34 @@
+name: Bug report
+description: Something behaves differently from what its docstring or the README says.
+labels: ["bug"]
+body:
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: What you expected, and what you got instead.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Minimal reproduction
+      description: >
+        The smallest input that shows the problem. Please use synthetic text — never paste
+        unpublished research, patient data, or anything under an NDA into a public issue.
+      render: python
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: "`pip show evidence-graph`, or the commit SHA."
+    validations:
+      required: true
+  - type: input
+    id: python
+    attributes:
+      label: Python version
+    validations:
+      required: true

@@ -1,0 +1,79 @@
+name: Security
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    # Weekly, so a rule set that learns about a new credential format still scans this history,
+    # and CodeQL re-runs against updated queries without waiting for a commit.
+    - cron: "17 5 * * 1"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: security-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  secrets:
+    name: Secret scan (full history)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          # Full history. Scanning only the tip would miss a credential that was committed and then
+          # "removed" in a later commit, which is exactly the case that matters: the object is still
+          # in the pack file and still public.
+          fetch-depth: 0
+      # The gitleaks GitHub Action requires a paid licence key for organisation-owned repos. The
+      # gitleaks binary itself is MIT and free, so we install it directly and pin both the version
+      # and its checksum. To upgrade: bump VERSION, then take the new hash from
+      # https://github.com/gitleaks/gitleaks/releases/download/v<VERSION>/gitleaks_<VERSION>_checksums.txt
+      - name: Install gitleaks
+        env:
+          VERSION: "8.30.1"
+          SHA256: "551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb"
+        run: |
+          set -euo pipefail
+          curl -fsSL -o gitleaks.tar.gz \
+            "https://github.com/gitleaks/gitleaks/releases/download/v${VERSION}/gitleaks_${VERSION}_linux_x64.tar.gz"
+          echo "${SHA256}  gitleaks.tar.gz" | sha256sum -c -
+          tar -xzf gitleaks.tar.gz gitleaks
+          sudo install -m 0755 gitleaks /usr/local/bin/gitleaks
+          gitleaks version
+      - name: Scan git history
+        # --redact so a finding never echoes the credential into public build logs, which would
+        # turn the detector into a second disclosure.
+        run: gitleaks git --redact --verbose --config .gitleaks.toml .
+      - name: Scan the working tree
+        # Catches an unstaged or newly added file that history scanning would not see.
+        run: gitleaks dir --redact --verbose --config .gitleaks.toml .
+
+  codeql:
+    name: CodeQL
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write   # required to upload results to the Security tab
+    steps:
+      - uses: actions/checkout@v7
+      - uses: github/codeql-action/init@v4
+        with:
+          languages: python
+          queries: security-extended
+      - uses: github/codeql-action/analyze@v4
+
+  dependency-review:
+    name: Dependency review
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      # A no-op today (the library has zero runtime dependencies) and that is the point: the first
+      # pull request that adds one gets its licence and advisories reviewed automatically.
+      - uses: actions/dependency-review-action@v5
+        with:
+          fail-on-severity: moderate
+          allow-licenses: Apache-2.0, MIT, BSD-2-Clause, BSD-3-Clause, ISC, PSF-2.0

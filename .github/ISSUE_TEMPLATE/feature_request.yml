@@ -1,0 +1,25 @@
+name: Feature request
+description: Propose a capability that fits the library's scope.
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: The problem
+      description: What you are trying to do that the library makes hard or impossible.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed shape
+      description: Roughly what the API would look like, if you have a view.
+  - type: checkboxes
+    id: scope
+    attributes:
+      label: Scope check
+      description: >
+        The library is deliberately narrow — see [CONTRIBUTING.md](../blob/main/CONTRIBUTING.md#scope).
+      options:
+        - label: This needs no network access, no credentials, and no model at import time.
+        - label: This does not require knowing about users, tenants, or requests.

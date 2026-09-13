@@ -1,0 +1,56 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "evidence-graph"
+version = "0.1.0.dev0"
+description = "Build knowledge graphs whose edges carry their evidence, or abstain from asserting them."
+readme = "README.md"
+requires-python = ">=3.11"
+license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE"]
+authors = [{ name = "SciWay", email = "hello@sciway.software" }]
+keywords = ["knowledge-graph", "provenance", "prov-o", "ro-crate", "abstention", "scientific-qa"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: Apache Software License",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Scientific/Engineering :: Information Analysis",
+  "Typing :: Typed",
+]
+
+# No runtime dependencies, and that is a design constraint rather than an accident: the library must
+# be droppable into any environment (including a stdlib-only backend) without pulling a tree behind
+# it. Anything needing a model, a network call, or a key belongs in the caller, behind a Protocol.
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["ruff==0.16.7"]
+
+[project.urls]
+Homepage = "https://github.com/SciWay-platform/evidence-graph"
+Source = "https://github.com/SciWay-platform/evidence-graph"
+Issues = "https://github.com/SciWay-platform/evidence-graph/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["evidence_graph"]
+
+[tool.ruff]
+line-length = 110
+target-version = "py311"
+src = [".", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "W"]
+# E501 (line too long) is deliberately off. Much of this code is inline regex grammar and curated
+# vocabulary tables where a hard wrap hurts readability, and enforcing it would mean reformatting
+# code that must stay diffable against its origin in the SciWay codebase. The rules that catch real
+# defects (F, B) are on.
+ignore = ["E501"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["evidence_graph"]
