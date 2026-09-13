@@ -47,6 +47,13 @@ DEFAULT_ASSERT_AT = 6.0
 # proposer emits both, the truth is not "whichever scored higher" — it is that the corpus disagrees.
 INCOMPATIBLE_TYPES = frozenset({"supports", "contradicts"})
 
+# Edge types whose claim is a COMPARISON between two documents, and which therefore have to cite
+# evidence from both. `decided` and `uses-protocol` are one-sided by construction — the deciding
+# document is the only one that records the decision — so demanding evidence from both ends
+# penalises them for being correctly formed. Found on a real corpus, where it accounted for 4433
+# abstentions.
+TWO_SIDED_TYPES = frozenset({"supports", "contradicts"})
+
 # Surface cues an edge type implies. Used by the grounding scorer to check that the quote shows
 # what the edge claims, not merely that a quote exists.
 _TYPE_CUES: dict[str, re.Pattern[str]] = {
@@ -180,9 +187,35 @@ def _pair_key(edge: dict[str, Any]) -> tuple[str, str, str]:
 # --------------------------------------------------------------------------------------------
 
 
-def _trigger_terms(trigger: str) -> list[str]:
-    """Split a proposer trigger like `ph=5.5` into the parts that must appear in the quote."""
-    return [part for part in re.split(r"[=\s]+", trigger or "") if part]
+# A proposer's `trigger` field is overloaded: sometimes it is a checkable claim about the quote,
+# sometimes a descriptive note about why the edge fired. Only the first kind can be verified, and
+# treating the second kind as verifiable fails every edge of that type — which is exactly what
+# happened on the first real corpus, where 100% of abstentions blamed an unverifiable trigger.
+#
+#   ph=5.5             -> checkable: the VALUE must appear in the quote.
+#   supports re: mAb-X -> checkable: the entity must appear in the quote.
+#   mentions mAb-X     -> checkable: likewise.
+#   decision on ph     -> a note. Not checkable, and not evidence of anything wrong.
+#   protocol reference -> a note.
+#
+# Note that only the value is required, never the label: labels are normalised (`concentration_molar`)
+# and by design do not appear in prose.
+_TRIGGER_MEASUREMENT = re.compile(r"^[\w .+/-]+=(?P<value>.+)$")
+_TRIGGER_ENTITY = re.compile(r"(?:\bre:|^mentions)\s+(?P<entity>.+)$", re.IGNORECASE)
+
+
+def _checkable_terms(trigger: str) -> list[str] | None:
+    """What must appear verbatim in the quote for this trigger, or None if it is a note."""
+    trigger = (trigger or "").strip()
+    if not trigger:
+        return None
+    match = _TRIGGER_MEASUREMENT.match(trigger)
+    if match:
+        return [match.group("value").strip()]
+    match = _TRIGGER_ENTITY.search(trigger)
+    if match:
+        return [match.group("entity").strip()]
+    return None
 
 
 class GroundingScorer:
@@ -194,8 +227,10 @@ class GroundingScorer:
 
       has_evidence        the edge cites at least one passage at all                    (hard gate)
       evidence_complete   every cited passage carries a quote and a locator
-      trigger_verbatim    the value the proposer says fired is actually in the quote
-      both_endpoints      a document-to-document edge cites evidence from both documents
+      trigger_verbatim    the value the proposer says fired is actually in the quote (only
+                          checked when the trigger makes a checkable claim — see `_checkable_terms`)
+      both_endpoints      a COMPARING edge (supports/contradicts) cites evidence from both
+                          documents; not applied to one-sided types, see TWO_SIDED_TYPES
       type_cue_present    the quote shows the cue the edge type implies (decided, uses-protocol)
 
     `trigger_verbatim` is the one that catches real defects: a proposer that reports `ph=5.5` from a
@@ -225,29 +260,28 @@ class GroundingScorer:
         if not checks["evidence_complete"]:
             reasons.append("a cited passage is missing its quote or locator")
 
-        triggered = [ev for ev in evidence if (ev.get("trigger") or "").strip()]
-        if triggered:
-            checks["trigger_verbatim"] = all(
-                all(term.lower() in (ev.get("quote") or "").lower() for term in _trigger_terms(ev["trigger"]))
-                for ev in triggered
-            )
-            if not checks["trigger_verbatim"]:
-                bad = next(
-                    ev for ev in triggered
-                    if not all(t.lower() in (ev.get("quote") or "").lower() for t in _trigger_terms(ev["trigger"]))
-                )
-                reasons.append(f"quote does not contain the trigger {bad['trigger']!r}")
-        else:
-            # Nothing claimed to have fired, so nothing to verify. Neither credit nor penalty: the
-            # check is recorded as untested by leaving it out of `checks`.
-            pass
+        def grounded(ev: dict[str, Any]) -> bool:
+            terms = _checkable_terms(ev.get("trigger", ""))
+            quote = (ev.get("quote") or "").lower()
+            return all(term.lower() in quote for term in terms) if terms else True
 
-        endpoints = {str(edge.get("source", "")), str(edge.get("target", ""))}
-        cited = {str(ev.get("artifact_id", "")) for ev in evidence}
-        checks["both_endpoints"] = endpoints.issubset(cited)
-        if not checks["both_endpoints"]:
-            missing = sorted(endpoints - cited)
-            reasons.append(f"no evidence cited from {', '.join(missing)}")
+        checkable = [ev for ev in evidence if _checkable_terms(ev.get("trigger", "")) is not None]
+        if checkable:
+            checks["trigger_verbatim"] = all(grounded(ev) for ev in checkable)
+            if not checks["trigger_verbatim"]:
+                bad = next(ev for ev in checkable if not grounded(ev))
+                reasons.append(f"quote does not contain the trigger {bad['trigger']!r}")
+        # When no trigger makes a checkable claim there is nothing to verify. The check is left out
+        # of `checks` entirely, so it neither earns credit nor costs any — an edge is not penalised
+        # for a proposer that reported a note instead of a value.
+
+        if str(edge.get("type", "")) in TWO_SIDED_TYPES:
+            endpoints = {str(edge.get("source", "")), str(edge.get("target", ""))}
+            cited = {str(ev.get("artifact_id", "")) for ev in evidence}
+            checks["both_endpoints"] = endpoints.issubset(cited)
+            if not checks["both_endpoints"]:
+                missing = sorted(endpoints - cited)
+                reasons.append(f"no evidence cited from {', '.join(missing)}")
 
         cue = _TYPE_CUES.get(str(edge.get("type", "")))
         if cue is not None:

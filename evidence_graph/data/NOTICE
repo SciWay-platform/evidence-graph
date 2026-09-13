@@ -1,0 +1,49 @@
+Vendored vocabulary data — sources, licences, and modifications
+==============================================================
+
+The files in this directory are DERIVED SUBSETS of public biomedical ontologies. The evidence-graph
+source code is Apache-2.0; this data is not, and each source keeps its own licence and requires its
+own attribution. Built 2026-09-14 by scripts/build_vocabulary.py.
+
+MODIFICATIONS (stated because CC BY 4.0 section 3(a)(1)(B) requires it)
+----------------------------------------------------------------------
+Every file here is a reformatted subset, not an original release. For each source we kept only the
+identifier, the primary label, and EXACT-scope synonyms, and wrote them as gzipped TSV. Obsolete
+terms were removed from the forward index and retained separately in redirects.tsv.gz. Ontology
+structure — definitions, cross-references, and the class hierarchy — was discarded. ChEBI was
+additionally filtered to curation level 2 stars and above. No term text was altered, except that
+HTML markup was stripped from ChEBI names and escaped quotes were unescaped in OBO synonyms.
+
+Do not treat these files as authoritative releases. Cite the upstream sources below.
+
+SOURCES
+-------
+  chebi      215,629 terms   6.89 MB  CC BY 4.0  ChEBI (https://www.ebi.ac.uk/chebi/)
+  cl           3,335 terms   0.05 MB  CC BY 4.0  Cell Ontology (https://obophenotype.github.io/cell-ontology/)
+  go          38,092 terms   0.71 MB  CC BY 4.0  Gene Ontology (https://geneontology.org/)
+  hgnc        45,054 terms   1.20 MB  CC0 1.0    HUGO Gene Nomenclature Committee (https://www.genenames.org/)
+  mondo       32,109 terms   0.82 MB  CC BY 4.0  Mondo Disease Ontology (https://mondo.monarchinitiative.org/)
+  uberon      14,977 terms   0.27 MB  CC BY 3.0  Uberon multi-species anatomy ontology (https://obophenotype.github.io/uberon/)
+  uniprot     20,431 terms   0.81 MB  CC BY 4.0  UniProt (https://www.uniprot.org/)
+
+  redirects   11,800 entries   0.06 MB  (obsolete and alternate identifiers, from the sources above)
+
+LICENCE TERMS
+-------------
+  CC0 1.0     HGNC. Public domain dedication; attribution is a courtesy, not a requirement.
+  CC BY 4.0   MONDO, GO, CL, ChEBI, UniProt. Redistribution permitted with attribution and an
+              indication of modification, both given above.
+  CC BY 3.0   UBERON. As above; UBERON has not moved to the 4.0 text.
+
+None of these licences is share-alike or non-commercial, so none of them affects the Apache-2.0
+licence of the code in this repository.
+
+RETRIEVAL URLS
+--------------
+  chebi      https://ftp.ebi.ac.uk/pub/databases/chebi/flat_files/names.tsv.gz
+  cl         https://purl.obolibrary.org/obo/cl/cl-basic.obo
+  go         https://current.geneontology.org/ontology/go-basic.obo
+  hgnc       https://storage.googleapis.com/public-download-files/hgnc/tsv/tsv/hgnc_complete_set.txt
+  mondo      https://purl.obolibrary.org/obo/mondo/mondo-simple.obo
+  uberon     https://purl.obolibrary.org/obo/uberon/basic.obo
+  uniprot    https://rest.uniprot.org/uniprotkb/stream?query=%28reviewed%3Atrue%29+AND+%28organism_id%3A9606%29&fields=accession%2Cid%2Cprotein_name%2Cgene_names&format=tsv&compressed=true

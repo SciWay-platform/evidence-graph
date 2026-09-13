@@ -1,0 +1,482 @@
+[
+  {
+    "id": "PMC10197643",
+    "title": "Development and Biophysical Characterization of a Humanized FSH–Blocking Monoclonal Antibody Therapeutic Formulated at an Ultra–High Concentration",
+    "artifact_type": "paper",
+    "source_system": "pmc-oa",
+    "created_at": "",
+    "structured_metadata": {
+      "doi": "10.1101/2023.05.11.540323",
+      "publisher": "PubMed Central Open Access Subset",
+      "publication_year": "2023",
+      "license": "CC BY",
+      "pmid": 37214886,
+      "creators": []
+    }
+  },
+  {
+    "id": "PMC10325703",
+    "title": "Development and biophysical characterization of a humanized FSH–blocking monoclonal antibody therapeutic formulated at an ultra-high concentration",
+    "artifact_type": "paper",
+    "source_system": "pmc-oa",
+    "created_at": "2023",
+    "structured_metadata": {
+      "doi": "10.7554/eLife.88898.sa2",
+      "publisher": "PubMed Central Open Access Subset",
+      "publication_year": "2023",
+      "license": "CC BY",
+      "pmid": 37334968,
+      "creators": []
+    }
+  },
+  {
+    "id": "PMC10747838",
+    "title": "Microwave-Assisted Freeze–Drying: Impact of Microwave Radiation on the Quality of High-Concentration Antibody Formulations",
+    "artifact_type": "paper",
+    "source_system": "pmc-oa",
+    "created_at": "2023 Dec",
+    "structured_metadata": {
+      "doi": "10.3390/pharmaceutics15122783",
+      "publisher": "PubMed Central Open Access Subset",
+      "publication_year": "2023",
+      "license": "CC BY",
+      "pmid": 38140123,
+      "creators": []
+    }
+  },
+  {
+    "id": "PMC11054243",
+    "title": "Investigation on the Combined Effect of Hydroxypropyl Beta-Cyclodextrin (HPβCD) and Polysorbate in Monoclonal Antibody Formulation",
+    "artifact_type": "paper",
+    "source_system": "pmc-oa",
+    "created_at": "2024 Apr",
+    "structured_metadata": {
+      "doi": "10.3390/ph17040528",
+      "publisher": "PubMed Central Open Access Subset",
+      "publication_year": "2024",
+      "license": "CC BY",
+      "pmid": 38675488,
+      "creators": []
+    }
+  },
+  {
+    "id": "PMC11539069",
+    "title": "Mitigation Strategies against Antibody Aggregation Induced by Oleic Acid in Liquid Formulations",
+    "artifact_type": "paper",
+    "source_system": "pmc-oa",
+    "created_at": "2024 Nov 4",
+    "structured_metadata": {
+      "doi": "10.1021/acs.molpharmaceut.4c00754",
+      "publisher": "PubMed Central Open Access Subset",
+      "publication_year": "2024",
+      "license": "CC BY",
+      "pmid": 39444106,
+      "creators": []
+    }
+  },
+  {
+    "id": "PMC11795528",
+    "title": "Water Activity as an Indicator for Antibody Storage Stability in Lyophilized Formulations",
+    "artifact_type": "paper",
+    "source_system": "pmc-oa",
+    "created_at": "2025 Feb 3",
+    "structured_metadata": {
+      "doi": "10.1021/acs.molpharmaceut.4c01106",
+      "publisher": "PubMed Central Open Access Subset",
+      "publication_year": "2025",
+      "license": "CC BY",
+      "pmid": 39809457,
+      "creators": []
+    }
+  },
+  {
+    "id": "PMC11885717",
+    "title": "Ionic liquids as stabilisers of therapeutic protein formulations: a review of insulin and monoclonal antibodies",
+    "artifact_type": "paper",
+    "source_system": "pmc-oa",
+    "created_at": "2025 Feb",
+    "structured_metadata": {
+      "doi": "10.1007/s12551-024-01261-y",
+      "publisher": "PubMed Central Open Access Subset",
+      "publication_year": "2025",
+      "license": "CC BY",
+      "pmid": 40060006,
+      "creators": []
+    }
+  },
+  {
+    "id": "PMC12114724",
+    "title": "A Review on the Stability Challenges of Advanced Biologic Therapeutics",
+    "artifact_type": "paper",
+    "source_system": "pmc-oa",
+    "created_at": "2025 May",
+    "structured_metadata": {
+      "doi": "10.3390/pharmaceutics17050550",
+      "publisher": "PubMed Central Open Access Subset",
+      "publication_year": "2025",
+      "license": "CC BY",
+      "pmid": 40430843,
+      "creators": []
+    }
+  },
+  {
+    "id": "PMC12587402",
+    "title": "Bayesian Optimization for Efficient Multiobjective Formulation Development of Biologics",
+    "artifact_type": "paper",
+    "source_system": "pmc-oa",
+    "created_at": "2025 Nov 3",
+    "structured_metadata": {
+      "doi": "10.1021/acs.molpharmaceut.5c00591",
+      "publisher": "PubMed Central Open Access Subset",
+      "publication_year": "2025",
+      "license": "CC BY",
+      "pmid": 41002022,
+      "creators": []
+    }
+  },
+  {
+    "id": "PMC12940363",
+    "title": "Characterization of Conformational Instability of Monoclonal Antibodies During Chromatographic Purification",
+    "artifact_type": "paper",
+    "source_system": "pmc-oa",
+    "created_at": "2026 Feb",
+    "structured_metadata": {
+      "doi": "10.3390/ijms27042064",
+      "publisher": "PubMed Central Open Access Subset",
+      "publication_year": "2026",
+      "license": "CC BY",
+      "pmid": 41752198,
+      "creators": []
+    }
+  },
+  {
+    "id": "PMC12963100",
+    "title": "Polymers as Stabilizing Excipients for Spray-Dried Protein Formulations",
+    "artifact_type": "paper",
+    "source_system": "pmc-oa",
+    "created_at": "",
+    "structured_metadata": {
+      "doi": "10.1007/s11095-025-03996-z",
+      "publisher": "PubMed Central Open Access Subset",
+      "publication_year": "2025",
+      "license": "CC BY",
+      "pmid": 41429994,
+      "creators": []
+    }
+  },
+  {
+    "id": "PMC13029131",
+    "title": "Formulation Matters: The Overlooked Engine of Stability and Success in Antibody–Drug Conjugates",
+    "artifact_type": "paper",
+    "source_system": "pmc-oa",
+    "created_at": "2026 Mar",
+    "structured_metadata": {
+      "doi": "10.3390/ph19030393",
+      "publisher": "PubMed Central Open Access Subset",
+      "publication_year": "2026",
+      "license": "CC BY",
+      "pmid": 41901238,
+      "creators": []
+    }
+  },
+  {
+    "id": "PMC13029507",
+    "title": "Phosphatidylcholine-Polysorbate 20-Based Mixed Micelles: A New Option to Prevent Protein Aggregation?",
+    "artifact_type": "paper",
+    "source_system": "pmc-oa",
+    "created_at": "2026 Mar",
+    "structured_metadata": {
+      "doi": "10.3390/pharmaceutics18030321",
+      "publisher": "PubMed Central Open Access Subset",
+      "publication_year": "2026",
+      "license": "CC BY",
+      "pmid": 41900807,
+      "creators": []
+    }
+  },
+  {
+    "id": "PMC13226222",
+    "title": "The colder, the better? Sustainability in frozen storage of a monoclonal antibody drug substance",
+    "artifact_type": "paper",
+    "source_system": "pmc-oa",
+    "created_at": "2026 Jun",
+    "structured_metadata": {
+      "doi": "10.1016/j.ijpx.2026.100572",
+      "publisher": "PubMed Central Open Access Subset",
+      "publication_year": "2026",
+      "license": "CC BY",
+      "pmid": 42238323,
+      "creators": []
+    }
+  },
+  {
+    "id": "PMC13231419",
+    "title": "Predicting Agitation Stability of Monoclonal Antibodies during Developability Assessment",
+    "artifact_type": "paper",
+    "source_system": "pmc-oa",
+    "created_at": "2026 Jun 1",
+    "structured_metadata": {
+      "doi": "10.1021/acs.molpharmaceut.6c00092",
+      "publisher": "PubMed Central Open Access Subset",
+      "publication_year": "2026",
+      "license": "CC BY",
+      "pmid": 42028833,
+      "creators": []
+    }
+  },
+  {
+    "id": "PMC4162492",
+    "title": "The effect of arginine glutamate on the stability of monoclonal antibodies in solution",
+    "artifact_type": "paper",
+    "source_system": "pmc-oa",
+    "created_at": "",
+    "structured_metadata": {
+      "doi": "10.1016/j.ijpharm.2014.06.053",
+      "publisher": "PubMed Central Open Access Subset",
+      "publication_year": "",
+      "license": "CC BY",
+      "pmid": 24992318,
+      "creators": []
+    }
+  },
+  {
+    "id": "PMC4794585",
+    "title": "Improved Stability of a Model IgG3 by DoE-Based Evaluation of Buffer Formulations",
+    "artifact_type": "paper",
+    "source_system": "pmc-oa",
+    "created_at": "",
+    "structured_metadata": {
+      "doi": "10.1155/2016/2074149",
+      "publisher": "PubMed Central Open Access Subset",
+      "publication_year": "2016",
+      "license": "CC BY",
+      "pmid": 27042659,
+      "creators": []
+    }
+  },
+  {
+    "id": "PMC5058632",
+    "title": "Characterizing monoclonal antibody formulations in arginine glutamate solutions using 1H NMR spectroscopy",
+    "artifact_type": "paper",
+    "source_system": "pmc-oa",
+    "created_at": "2016 Oct",
+    "structured_metadata": {
+      "doi": "10.1080/19420862.2016.1214786",
+      "publisher": "PubMed Central Open Access Subset",
+      "publication_year": "2016",
+      "license": "CC BY",
+      "pmid": 27589351,
+      "creators": []
+    }
+  },
+  {
+    "id": "PMC5575515",
+    "title": "Multi‐criteria manufacturability indices for ranking high‐concentration monoclonal antibody formulations",
+    "artifact_type": "paper",
+    "source_system": "pmc-oa",
+    "created_at": "",
+    "structured_metadata": {
+      "doi": "10.1002/bit.26329",
+      "publisher": "PubMed Central Open Access Subset",
+      "publication_year": "2017",
+      "license": "CC BY",
+      "pmid": 28464235,
+      "creators": []
+    }
+  },
+  {
+    "id": "PMC5830485",
+    "title": "Formulation Stabilization and Disaggregation of Bevacizumab, Ranibizumab and Aflibercept in Dilute Solutions",
+    "artifact_type": "paper",
+    "source_system": "pmc-oa",
+    "created_at": "",
+    "structured_metadata": {
+      "doi": "10.1007/s11095-018-2368-7",
+      "publisher": "PubMed Central Open Access Subset",
+      "publication_year": "2018",
+      "license": "CC BY",
+      "pmid": 29492680,
+      "creators": []
+    }
+  },
+  {
+    "id": "PMC5859698",
+    "title": "Impact of Buffer, Protein Concentration and Sucrose Addition on the Aggregation and Particle Formation during Freezing and Thawing",
+    "artifact_type": "paper",
+    "source_system": "pmc-oa",
+    "created_at": "",
+    "structured_metadata": {
+      "doi": "10.1007/s11095-018-2378-5",
+      "publisher": "PubMed Central Open Access Subset",
+      "publication_year": "2018",
+      "license": "CC BY",
+      "pmid": 29556730,
+      "creators": []
+    }
+  },
+  {
+    "id": "PMC6244757",
+    "title": "Affinity profiling of monoclonal antibody and antibody-drug-conjugate preparations by coupled liquid chromatography-surface plasmon resonance biosensing",
+    "artifact_type": "paper",
+    "source_system": "pmc-oa",
+    "created_at": "",
+    "structured_metadata": {
+      "doi": "10.1007/s00216-018-1414-y",
+      "publisher": "PubMed Central Open Access Subset",
+      "publication_year": "2018",
+      "license": "CC BY",
+      "pmid": 30328504,
+      "creators": []
+    }
+  },
+  {
+    "id": "PMC6800455",
+    "title": "Coupling Multi-Angle Light Scattering to Reverse-Phase Ultra-High-Pressure Chromatography (RP-UPLC-MALS) for the characterization monoclonal antibodies",
+    "artifact_type": "paper",
+    "source_system": "pmc-oa",
+    "created_at": "2019",
+    "structured_metadata": {
+      "doi": "10.1038/s41598-019-51233-6",
+      "publisher": "PubMed Central Open Access Subset",
+      "publication_year": "2019",
+      "license": "CC BY",
+      "pmid": 31628369,
+      "creators": []
+    }
+  },
+  {
+    "id": "PMC7387379",
+    "title": "FTIR Spectroscopy Detects Intermolecular β-Sheet Formation Above the High Temperature Tm for Two Monoclonal Antibodies",
+    "artifact_type": "paper",
+    "source_system": "pmc-oa",
+    "created_at": "",
+    "structured_metadata": {
+      "doi": "10.1007/s10930-020-09907-y",
+      "publisher": "PubMed Central Open Access Subset",
+      "publication_year": "2020",
+      "license": "CC BY",
+      "pmid": 32656609,
+      "creators": []
+    }
+  },
+  {
+    "id": "PMC7527260",
+    "title": "Monoclonal antibody stability can be usefully monitored using the excitation-energy-dependent fluorescence edge-shift",
+    "artifact_type": "paper",
+    "source_system": "pmc-oa",
+    "created_at": "2020 Sep 1",
+    "structured_metadata": {
+      "doi": "10.1042/BCJ20200580",
+      "publisher": "PubMed Central Open Access Subset",
+      "publication_year": "2020",
+      "license": "CC BY",
+      "pmid": 32869839,
+      "creators": []
+    }
+  },
+  {
+    "id": "PMC7713237",
+    "title": "Stability enhancement in a mAb and Fab coformulation",
+    "artifact_type": "paper",
+    "source_system": "pmc-oa",
+    "created_at": "2020",
+    "structured_metadata": {
+      "doi": "10.1038/s41598-020-77989-w",
+      "publisher": "PubMed Central Open Access Subset",
+      "publication_year": "2020",
+      "license": "CC BY",
+      "pmid": 33273491,
+      "creators": []
+    }
+  },
+  {
+    "id": "PMC7815873",
+    "title": "Washing with alkaline solutions in protein A purification improves physicochemical properties of monoclonal antibodies",
+    "artifact_type": "paper",
+    "source_system": "pmc-oa",
+    "created_at": "2021",
+    "structured_metadata": {
+      "doi": "10.1038/s41598-021-81366-6",
+      "publisher": "PubMed Central Open Access Subset",
+      "publication_year": "2021",
+      "license": "CC BY",
+      "pmid": 33469121,
+      "creators": []
+    }
+  },
+  {
+    "id": "PMC9010397",
+    "title": "A Comprehensive Scientific Survey of Excipients Used in Currently Marketed, Therapeutic Biological Drug Products",
+    "artifact_type": "paper",
+    "source_system": "pmc-oa",
+    "created_at": "",
+    "structured_metadata": {
+      "doi": "10.1007/s11095-020-02919-4",
+      "publisher": "PubMed Central Open Access Subset",
+      "publication_year": "2020",
+      "license": "CC BY",
+      "pmid": 32968854,
+      "creators": []
+    }
+  },
+  {
+    "id": "PMC9364768",
+    "title": "Immunogenicity Risk Assessment of Spontaneously Occurring Therapeutic Monoclonal Antibody Aggregates",
+    "artifact_type": "paper",
+    "source_system": "pmc-oa",
+    "created_at": "2022",
+    "structured_metadata": {
+      "doi": "10.3389/fimmu.2022.915412",
+      "publisher": "PubMed Central Open Access Subset",
+      "publication_year": "2022",
+      "license": "CC BY",
+      "pmid": 35967308,
+      "creators": []
+    }
+  },
+  {
+    "id": "PMC9449975",
+    "title": "Understanding the Stabilizing Effect of Histidine on mAb Aggregation: A Molecular Dynamics Study",
+    "artifact_type": "paper",
+    "source_system": "pmc-oa",
+    "created_at": "",
+    "structured_metadata": {
+      "doi": "10.1021/acs.molpharmaceut.2c00453",
+      "publisher": "PubMed Central Open Access Subset",
+      "publication_year": "2022",
+      "license": "CC BY",
+      "pmid": 35946408,
+      "creators": []
+    }
+  },
+  {
+    "id": "PMC9572940",
+    "title": "Polysorbates versus Hydroxypropyl Beta-Cyclodextrin (HPβCD): Comparative Study on Excipient Stability and Stabilization Benefits on Monoclonal Antibodies",
+    "artifact_type": "paper",
+    "source_system": "pmc-oa",
+    "created_at": "2022 Oct",
+    "structured_metadata": {
+      "doi": "10.3390/molecules27196497",
+      "publisher": "PubMed Central Open Access Subset",
+      "publication_year": "2022",
+      "license": "CC BY",
+      "pmid": 36235038,
+      "creators": []
+    }
+  },
+  {
+    "id": "PMC9781097",
+    "title": "Alternative Excipients for Protein Stabilization in Protein Therapeutics: Overcoming the Limitations of Polysorbates",
+    "artifact_type": "paper",
+    "source_system": "pmc-oa",
+    "created_at": "2022 Dec",
+    "structured_metadata": {
+      "doi": "10.3390/pharmaceutics14122575",
+      "publisher": "PubMed Central Open Access Subset",
+      "publication_year": "2022",
+      "license": "CC BY",
+      "pmid": 36559072,
+      "creators": []
+    }
+  }
+]

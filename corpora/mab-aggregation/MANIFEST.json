@@ -1,0 +1,307 @@
+{
+  "name": "mab-aggregation",
+  "query": "protein aggregation monoclonal antibody formulation stability",
+  "built": "2026-09-14",
+  "source": "PubMed Central Open Access Subset via AWS Open Data (s3://pmc-oa-opendata)",
+  "redistributable_licences": [
+    "CC BY",
+    "CC0"
+  ],
+  "articles": 32,
+  "chunks": 5333,
+  "skipped": {
+    "licence not redistributable (CC BY-NC)": 7,
+    "licence not redistributable (unknown)": 4,
+    "licence not redistributable (CC BY-NC-ND)": 2
+  },
+  "records": [
+    {
+      "id": "PMC10197643",
+      "pmid": 37214886,
+      "doi": "10.1101/2023.05.11.540323",
+      "licence": "CC BY",
+      "title": "Development and Biophysical Characterization of a Humanized FSH–Blocking Monoclonal Antibody Therapeutic Formulated at an Ultra–High Concentration",
+      "paragraphs": 145,
+      "source_uri": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10197643/"
+    },
+    {
+      "id": "PMC10325703",
+      "pmid": 37334968,
+      "doi": "10.7554/eLife.88898.sa2",
+      "licence": "CC BY",
+      "title": "Development and biophysical characterization of a humanized FSH–blocking monoclonal antibody therapeutic formulated at an ultra-high concentration",
+      "paragraphs": 182,
+      "source_uri": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10325703/"
+    },
+    {
+      "id": "PMC10747838",
+      "pmid": 38140123,
+      "doi": "10.3390/pharmaceutics15122783",
+      "licence": "CC BY",
+      "title": "Microwave-Assisted Freeze–Drying: Impact of Microwave Radiation on the Quality of High-Concentration Antibody Formulations",
+      "paragraphs": 104,
+      "source_uri": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10747838/"
+    },
+    {
+      "id": "PMC11054243",
+      "pmid": 38675488,
+      "doi": "10.3390/ph17040528",
+      "licence": "CC BY",
+      "title": "Investigation on the Combined Effect of Hydroxypropyl Beta-Cyclodextrin (HPβCD) and Polysorbate in Monoclonal Antibody Formulation",
+      "paragraphs": 135,
+      "source_uri": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC11054243/"
+    },
+    {
+      "id": "PMC11539069",
+      "pmid": 39444106,
+      "doi": "10.1021/acs.molpharmaceut.4c00754",
+      "licence": "CC BY",
+      "title": "Mitigation Strategies against Antibody Aggregation Induced by Oleic Acid in Liquid Formulations",
+      "paragraphs": 152,
+      "source_uri": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC11539069/"
+    },
+    {
+      "id": "PMC11795528",
+      "pmid": 39809457,
+      "doi": "10.1021/acs.molpharmaceut.4c01106",
+      "licence": "CC BY",
+      "title": "Water Activity as an Indicator for Antibody Storage Stability in Lyophilized Formulations",
+      "paragraphs": 136,
+      "source_uri": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC11795528/"
+    },
+    {
+      "id": "PMC11885717",
+      "pmid": 40060006,
+      "doi": "10.1007/s12551-024-01261-y",
+      "licence": "CC BY",
+      "title": "Ionic liquids as stabilisers of therapeutic protein formulations: a review of insulin and monoclonal antibodies",
+      "paragraphs": 228,
+      "source_uri": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC11885717/"
+    },
+    {
+      "id": "PMC12114724",
+      "pmid": 40430843,
+      "doi": "10.3390/pharmaceutics17050550",
+      "licence": "CC BY",
+      "title": "A Review on the Stability Challenges of Advanced Biologic Therapeutics",
+      "paragraphs": 486,
+      "source_uri": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12114724/"
+    },
+    {
+      "id": "PMC12587402",
+      "pmid": 41002022,
+      "doi": "10.1021/acs.molpharmaceut.5c00591",
+      "licence": "CC BY",
+      "title": "Bayesian Optimization for Efficient Multiobjective Formulation Development of Biologics",
+      "paragraphs": 132,
+      "source_uri": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12587402/"
+    },
+    {
+      "id": "PMC12940363",
+      "pmid": 41752198,
+      "doi": "10.3390/ijms27042064",
+      "licence": "CC BY",
+      "title": "Characterization of Conformational Instability of Monoclonal Antibodies During Chromatographic Purification",
+      "paragraphs": 239,
+      "source_uri": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12940363/"
+    },
+    {
+      "id": "PMC12963100",
+      "pmid": 41429994,
+      "doi": "10.1007/s11095-025-03996-z",
+      "licence": "CC BY",
+      "title": "Polymers as Stabilizing Excipients for Spray-Dried Protein Formulations",
+      "paragraphs": 205,
+      "source_uri": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12963100/"
+    },
+    {
+      "id": "PMC13029131",
+      "pmid": 41901238,
+      "doi": "10.3390/ph19030393",
+      "licence": "CC BY",
+      "title": "Formulation Matters: The Overlooked Engine of Stability and Success in Antibody–Drug Conjugates",
+      "paragraphs": 434,
+      "source_uri": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC13029131/"
+    },
+    {
+      "id": "PMC13029507",
+      "pmid": 41900807,
+      "doi": "10.3390/pharmaceutics18030321",
+      "licence": "CC BY",
+      "title": "Phosphatidylcholine-Polysorbate 20-Based Mixed Micelles: A New Option to Prevent Protein Aggregation?",
+      "paragraphs": 181,
+      "source_uri": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC13029507/"
+    },
+    {
+      "id": "PMC13226222",
+      "pmid": 42238323,
+      "doi": "10.1016/j.ijpx.2026.100572",
+      "licence": "CC BY",
+      "title": "The colder, the better? Sustainability in frozen storage of a monoclonal antibody drug substance",
+      "paragraphs": 105,
+      "source_uri": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC13226222/"
+    },
+    {
+      "id": "PMC13231419",
+      "pmid": 42028833,
+      "doi": "10.1021/acs.molpharmaceut.6c00092",
+      "licence": "CC BY",
+      "title": "Predicting Agitation Stability of Monoclonal Antibodies during Developability Assessment",
+      "paragraphs": 176,
+      "source_uri": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC13231419/"
+    },
+    {
+      "id": "PMC4162492",
+      "pmid": 24992318,
+      "doi": "10.1016/j.ijpharm.2014.06.053",
+      "licence": "CC BY",
+      "title": "The effect of arginine glutamate on the stability of monoclonal antibodies in solution",
+      "paragraphs": 82,
+      "source_uri": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4162492/"
+    },
+    {
+      "id": "PMC4794585",
+      "pmid": 27042659,
+      "doi": "10.1155/2016/2074149",
+      "licence": "CC BY",
+      "title": "Improved Stability of a Model IgG3 by DoE-Based Evaluation of Buffer Formulations",
+      "paragraphs": 73,
+      "source_uri": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4794585/"
+    },
+    {
+      "id": "PMC5058632",
+      "pmid": 27589351,
+      "doi": "10.1080/19420862.2016.1214786",
+      "licence": "CC BY",
+      "title": "Characterizing monoclonal antibody formulations in arginine glutamate solutions using 1H NMR spectroscopy",
+      "paragraphs": 92,
+      "source_uri": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5058632/"
+    },
+    {
+      "id": "PMC5575515",
+      "pmid": 28464235,
+      "doi": "10.1002/bit.26329",
+      "licence": "CC BY",
+      "title": "Multi‐criteria manufacturability indices for ranking high‐concentration monoclonal antibody formulations",
+      "paragraphs": 151,
+      "source_uri": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5575515/"
+    },
+    {
+      "id": "PMC5830485",
+      "pmid": 29492680,
+      "doi": "10.1007/s11095-018-2368-7",
+      "licence": "CC BY",
+      "title": "Formulation Stabilization and Disaggregation of Bevacizumab, Ranibizumab and Aflibercept in Dilute Solutions",
+      "paragraphs": 145,
+      "source_uri": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5830485/"
+    },
+    {
+      "id": "PMC5859698",
+      "pmid": 29556730,
+      "doi": "10.1007/s11095-018-2378-5",
+      "licence": "CC BY",
+      "title": "Impact of Buffer, Protein Concentration and Sucrose Addition on the Aggregation and Particle Formation during Freezing and Thawing",
+      "paragraphs": 143,
+      "source_uri": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5859698/"
+    },
+    {
+      "id": "PMC6244757",
+      "pmid": 30328504,
+      "doi": "10.1007/s00216-018-1414-y",
+      "licence": "CC BY",
+      "title": "Affinity profiling of monoclonal antibody and antibody-drug-conjugate preparations by coupled liquid chromatography-surface plasmon resonance biosensing",
+      "paragraphs": 78,
+      "source_uri": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6244757/"
+    },
+    {
+      "id": "PMC6800455",
+      "pmid": 31628369,
+      "doi": "10.1038/s41598-019-51233-6",
+      "licence": "CC BY",
+      "title": "Coupling Multi-Angle Light Scattering to Reverse-Phase Ultra-High-Pressure Chromatography (RP-UPLC-MALS) for the characterization monoclonal antibodies",
+      "paragraphs": 77,
+      "source_uri": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6800455/"
+    },
+    {
+      "id": "PMC7387379",
+      "pmid": 32656609,
+      "doi": "10.1007/s10930-020-09907-y",
+      "licence": "CC BY",
+      "title": "FTIR Spectroscopy Detects Intermolecular β-Sheet Formation Above the High Temperature Tm for Two Monoclonal Antibodies",
+      "paragraphs": 65,
+      "source_uri": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7387379/"
+    },
+    {
+      "id": "PMC7527260",
+      "pmid": 32869839,
+      "doi": "10.1042/BCJ20200580",
+      "licence": "CC BY",
+      "title": "Monoclonal antibody stability can be usefully monitored using the excitation-energy-dependent fluorescence edge-shift",
+      "paragraphs": 105,
+      "source_uri": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7527260/"
+    },
+    {
+      "id": "PMC7713237",
+      "pmid": 33273491,
+      "doi": "10.1038/s41598-020-77989-w",
+      "licence": "CC BY",
+      "title": "Stability enhancement in a mAb and Fab coformulation",
+      "paragraphs": 116,
+      "source_uri": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7713237/"
+    },
+    {
+      "id": "PMC7815873",
+      "pmid": 33469121,
+      "doi": "10.1038/s41598-021-81366-6",
+      "licence": "CC BY",
+      "title": "Washing with alkaline solutions in protein A purification improves physicochemical properties of monoclonal antibodies",
+      "paragraphs": 114,
+      "source_uri": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7815873/"
+    },
+    {
+      "id": "PMC9010397",
+      "pmid": 32968854,
+      "doi": "10.1007/s11095-020-02919-4",
+      "licence": "CC BY",
+      "title": "A Comprehensive Scientific Survey of Excipients Used in Currently Marketed, Therapeutic Biological Drug Products",
+      "paragraphs": 97,
+      "source_uri": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9010397/"
+    },
+    {
+      "id": "PMC9364768",
+      "pmid": 35967308,
+      "doi": "10.3389/fimmu.2022.915412",
+      "licence": "CC BY",
+      "title": "Immunogenicity Risk Assessment of Spontaneously Occurring Therapeutic Monoclonal Antibody Aggregates",
+      "paragraphs": 95,
+      "source_uri": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9364768/"
+    },
+    {
+      "id": "PMC9449975",
+      "pmid": 35946408,
+      "doi": "10.1021/acs.molpharmaceut.2c00453",
+      "licence": "CC BY",
+      "title": "Understanding the Stabilizing Effect of Histidine on mAb Aggregation: A Molecular Dynamics Study",
+      "paragraphs": 148,
+      "source_uri": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9449975/"
+    },
+    {
+      "id": "PMC9572940",
+      "pmid": 36235038,
+      "doi": "10.3390/molecules27196497",
+      "licence": "CC BY",
+      "title": "Polysorbates versus Hydroxypropyl Beta-Cyclodextrin (HPβCD): Comparative Study on Excipient Stability and Stabilization Benefits on Monoclonal Antibodies",
+      "paragraphs": 129,
+      "source_uri": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9572940/"
+    },
+    {
+      "id": "PMC9781097",
+      "pmid": 36559072,
+      "doi": "10.3390/pharmaceutics14122575",
+      "licence": "CC BY",
+      "title": "Alternative Excipients for Protein Stabilization in Protein Therapeutics: Overcoming the Limitations of Polysorbates",
+      "paragraphs": 583,
+      "source_uri": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9781097/"
+    }
+  ]
+}

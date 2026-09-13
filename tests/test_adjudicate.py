@@ -58,7 +58,18 @@ class GroundingScorerTests(unittest.TestCase):
         broken["evidence"][1]["quote"] = ""
         self.assertFalse(GroundingScorer()(broken).checks["evidence_complete"])
 
-    def test_edge_citing_only_one_endpoint_is_penalised(self):
+    def test_one_sided_edge_types_are_not_asked_for_two_sided_evidence(self):
+        # `decided` records what ONE document decided; there is no second passage to cite. Demanding
+        # one penalised a correctly formed edge (4433 abstentions on the first real corpus).
+        decided = _edge("decided", evidence=[
+            {"artifact_id": "a", "chunk_id": "c1", "source_uri": "u1",
+             "quote": "We selected pH 7.0 as the baseline.", "trigger": "decision on ph"},
+        ])
+        score = GroundingScorer()(decided)
+        self.assertNotIn("both_endpoints", score.checks)
+        self.assertGreaterEqual(score.score, DEFAULT_ASSERT_AT)
+
+    def test_comparing_edge_citing_only_one_endpoint_is_penalised(self):
         one_sided = _edge(evidence=[
             {"artifact_id": "a", "chunk_id": "c1", "source_uri": "u1",
              "quote": "Lowest aggregation at pH 5.5.", "trigger": "ph=5.5"},
@@ -181,3 +192,57 @@ class AdjudicationShapeTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TriggerSemanticsTests(unittest.TestCase):
+    """Regression tests for the overloaded `trigger` field.
+
+    On the first real corpus (32 PMC articles, 18k candidate edges) the scorer abstained on 88% of
+    candidates and blamed an unverifiable trigger in 100% of those cases. Two faults: descriptive
+    notes like "decision on ph" were treated as claims about the quote, and the normalised label
+    (`concentration_molar`) was required to appear in prose, which it never does.
+    """
+
+    def _score(self, trigger, quote, *, other_trigger="ph=7.0"):
+        edge = _edge(evidence=[
+            {"artifact_id": "a", "chunk_id": "c1", "source_uri": "u1", "quote": quote,
+             "trigger": trigger},
+            {"artifact_id": "b", "chunk_id": "c2", "source_uri": "u2",
+             "quote": "Lowest aggregation was observed at pH 7.0.", "trigger": other_trigger},
+        ])
+        return GroundingScorer()(edge)
+
+    def test_measurement_trigger_requires_only_the_value(self):
+        # The label is normalised and never appears in the text; requiring it failed every edge.
+        score = self._score("concentration_molar=25 mM", "Arginine was added at 25 mM.")
+        self.assertTrue(score.checks["trigger_verbatim"])
+
+    def test_measurement_trigger_still_catches_a_value_that_is_absent(self):
+        score = self._score("ph=5.5", "The buffer was prepared fresh each morning.")
+        self.assertFalse(score.checks["trigger_verbatim"])
+
+    def test_descriptive_notes_are_not_treated_as_claims(self):
+        for note in ("decision on ph", "protocol reference", "supports", "contradicts"):
+            with self.subTest(note=note):
+                score = self._score(note, "We selected pH 7.0 as the baseline.",
+                                    other_trigger=note)
+                self.assertNotIn("trigger_verbatim", score.checks,
+                                 f"{note!r} is a note, so there is nothing to verify")
+
+    def test_a_checkable_trigger_is_still_checked_alongside_notes(self):
+        # A mixed edge must not get a free pass just because one of its triggers is a note.
+        score = self._score("decision on ph", "Unrelated sentence.", other_trigger="ph=9.9")
+        self.assertFalse(score.checks["trigger_verbatim"])
+
+    def test_entity_triggers_are_checkable(self):
+        self.assertTrue(self._score("mentions mAb-X", "mAb-X was formulated at pH 6.0.")
+                        .checks["trigger_verbatim"])
+        self.assertFalse(self._score("supports re: mAb-X", "The buffer was prepared fresh.")
+                         .checks["trigger_verbatim"])
+
+    def test_an_edge_of_notes_only_is_judged_on_its_other_checks(self):
+        # Previously such an edge scored 0 on a check it could never pass.
+        score = self._score("decision on ph", "We selected pH 7.0 as the baseline.",
+                            other_trigger="decision on ph")
+        self.assertNotIn("trigger_verbatim", score.checks)
+        self.assertGreaterEqual(score.score, 6.0)

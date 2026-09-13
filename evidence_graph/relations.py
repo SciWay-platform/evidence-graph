@@ -81,9 +81,23 @@ _ENTITY_RE = re.compile(
     r"\b([A-Za-z]{2,}[A-Za-z0-9]*)[\s\-]?((?:[A-Za-z]?\d{1,4}[A-Za-z]?)|[A-Z])\b"
 )
 # Common words that would otherwise slip through as "stem + digit/letter"; never entities.
+#
+# The prepositions and the measurement labels are the ones that actually bit: on a real corpus
+# "at 0.01%", "of 0.1 M" and "pH 6" all matched stem+designator, producing entities `at0`, `of0`
+# and `ph6` that then linked unrelated documents. A measured quantity is handled by the measurement
+# grammar above and is never a named entity.
 _ENTITY_STOP = frozenset(
     "figure table section page chapter volume part step phase day week month year note "
-    "sample group type class level stage round trial run test item line row column".split()
+    "sample group type class level stage round trial run test item line row column "
+    # prepositions, articles and conjunctions
+    "at of in on to by for with from into over under above below and or but the a an as is are "
+    "was were be been than then when where which while after before during within without "
+    # measurement labels: these are quantities, not entities
+    "ph temperature temp time conc concentration dose volume mass weight rate ratio speed "
+    "rpm rcf molar molarity percent percentage fraction range mean median average total "
+    # generic scientific nouns that take a numeric designator
+    "study experiment assay method model result data set batch lot version panel arm cohort "
+    "condition control replicate point value number count size width height depth area".split()
 )
 
 
@@ -119,19 +133,23 @@ def normalize_entity(surface: str) -> str:
     return compact.lower()
 
 
-def _entity_mentions(chunks: list[dict]) -> dict[str, dict[str, dict]]:
-    """canonical_entity -> {artifact_id: first_chunk_that_mentioned_it}. Deterministic (first mention
-    per artifact wins, chunks scanned in order). Callers filter to entities spanning 2+ artifacts."""
-    per: dict[str, dict[str, dict]] = defaultdict(dict)
+def _entity_mentions(chunks: list[dict]) -> dict[str, dict[str, tuple[dict, str]]]:
+    """canonical_entity -> {artifact_id: (first_chunk_that_mentioned_it, its surface form)}.
+
+    The surface form is kept alongside the chunk because the canonical key is normalised
+    (`mAb-X` -> `mabx`) and so never appears in the text. Quoting the key back at a reader as
+    provenance would be unreadable, and it would make the citation unverifiable against its own
+    source. Deterministic: first mention per artifact wins, chunks scanned in order.
+    """
+    per: dict[str, dict[str, tuple[dict, str]]] = defaultdict(dict)
     for ch in chunks:
         aid = ch.get("artifact_id", "")
         if not aid:
             continue
-        text = _text(ch)
-        for m in _ENTITY_RE.finditer(text):
+        for m in _ENTITY_RE.finditer(_text(ch)):
             key = normalize_entity(m.group(0))
             if key:
-                per[key].setdefault(aid, ch)
+                per[key].setdefault(aid, (ch, m.group(0)))
     return per
 
 
@@ -139,8 +157,44 @@ def _text(chunk: dict) -> str:
     return str(chunk.get("chunk_text") or chunk.get("source_quote") or "")
 
 
-def _quote(text: str, limit: int = 160) -> str:
+# What a trigger note claims can be found in the quote. Mirrors `adjudicate._checkable_terms`: a
+# measurement note is `label=value` and an entity note is `... re: X` or `mentions X`.
+_ANCHOR_MEASUREMENT = re.compile(r"^[\w .+/-]+=(?P<value>.+)$")
+_ANCHOR_ENTITY = re.compile(r"(?:\bre:|^mentions)\s+(?P<entity>.+)$", re.IGNORECASE)
+
+
+def _anchor(note: str) -> str:
+    """The substring a cited quote must contain, given the trigger note. Empty when the note is
+    descriptive ("decision on ph", "protocol reference") and claims nothing about the text."""
+    note = (note or "").strip()
+    match = _ANCHOR_MEASUREMENT.match(note) or _ANCHOR_ENTITY.search(note)
+    return (match.group(1).strip() if match else "")
+
+
+def _quote(text: str, limit: int = 160, anchor: str = "") -> str:
+    """A short quote from `text`, WINDOWED ON `anchor` when one is given.
+
+    Taking the first `limit` characters is wrong whenever the matched value sits further into the
+    passage: the citation then does not contain the thing it is cited for, which makes it
+    uncheckable by a reader and worse than no citation at all. Found on a real corpus, where the
+    value a trigger named was routinely past the 160-character cut.
+
+    The window is centred on the match and marked with an ellipsis when it does not start at the
+    beginning, so a reader can see the quote is an excerpt.
+    """
     s = re.sub(r"\s+", " ", text).strip()
+    if len(s) <= limit:
+        return s
+    if anchor:
+        position = s.lower().find(anchor.strip().lower())
+        if position >= 0:
+            end_of_match = position + len(anchor.strip())
+            if end_of_match > limit:
+                # Centre the window on the match, clamped to the ends of the passage.
+                start = max(0, position - (limit - len(anchor.strip())) // 2)
+                start = min(start, max(0, len(s) - limit))
+                excerpt = s[start:start + limit]
+                return ("…" + excerpt) if start else excerpt
     return s[:limit]
 
 
@@ -187,12 +241,16 @@ def _edge(source: str, target: str, etype: str, quantity: str, evidence: list[di
             "quantity": quantity, "evidence": evidence, "method": "regex"}
 
 
-def _ev(chunk: dict, note: str) -> dict:
+def _ev(chunk: dict, note: str, anchor: str = "") -> dict:
+    """One evidence item. `anchor` overrides the substring the quote is windowed on, for edges whose
+    note is descriptive ("decision on ph") but which DID fire on a specific phrase in the text.
+    Without it the quote is the opening of the passage and may not contain the cue the edge rests
+    on, which is the same defect as an unanchored measurement quote."""
     return {"artifact_id": chunk.get("artifact_id", ""),
             "chunk_id": chunk.get("id", ""),
             "location": chunk.get("page_or_row_reference", ""),
             "source_uri": chunk.get("source_uri", ""),
-            "quote": _quote(_text(chunk)), "trigger": note}
+            "quote": _quote(_text(chunk), anchor=anchor or _anchor(note)), "trigger": note}
 
 
 def extract_typed_relations(artifacts: list[dict], chunks: list[dict]) -> list[dict]:
@@ -265,23 +323,30 @@ def extract_typed_relations(artifacts: list[dict], chunks: list[dict]) -> list[d
             etype = "supports"
         if not etype:
             continue
+        cue_match = _CONTRADICTION_RE.search(text) or _AGREEMENT_RE.search(text)
+        cue = cue_match.group(0) if cue_match else ""
         # (a) title-token match — link only carries the source chunk (the title named the result).
         for other, toks in title_tokens.items():
             if other == aid or not toks:
                 continue
             if any(t in low for t in toks):
-                add(aid, other, etype, "documented", [_ev(ch, etype)])
+                add(aid, other, etype, "documented", [_ev(ch, etype, anchor=cue)])
         # (b) cross-document entity link — the chunk shares a normalized named entity with another
         #     artifact. Emit an edge to each such artifact, provenance = this chunk + the artifact's
         #     own mention chunk (so the UI can show both linked passages verbatim).
-        chunk_entities = {normalize_entity(m.group(0)) for m in _ENTITY_RE.finditer(text)}
-        chunk_entities.discard("")
-        for ent in sorted(chunk_entities):
-            for other, mention in sorted(entity_index.get(ent, {}).items()):
+        chunk_entities: dict[str, str] = {}
+        for m in _ENTITY_RE.finditer(text):
+            key = normalize_entity(m.group(0))
+            if key:
+                chunk_entities.setdefault(key, m.group(0))
+        for ent, here in sorted(chunk_entities.items()):
+            for other, (mention, there) in sorted(entity_index.get(ent, {}).items()):
                 if other == aid:
                     continue
+                # Each side quotes the surface form as it appears in ITS OWN passage, so both
+                # citations can be checked against the text a reader will actually see.
                 add(aid, other, etype, ent,
-                    [_ev(ch, f"{etype} re: {ent}"), _ev(mention, f"mentions {ent}")])
+                    [_ev(ch, f"{etype} re: {here}"), _ev(mention, f"mentions {there}")])
 
     # 3) DECIDED: a chunk in an artifact that records a decision about a measured quantity -> edge to
     #    every artifact that reports a value for that quantity (the evidence the decision rests on).
@@ -290,12 +355,16 @@ def extract_typed_relations(artifacts: list[dict], chunks: list[dict]) -> list[d
         if aid not in by_id:
             continue
         text = _text(ch)
-        if not _DECISION_RE.search(text):
+        decision = _DECISION_RE.search(text)
+        if not decision:
             continue
+        # Window the quote on the decision verb itself: it is the reason the edge exists, and a
+        # citation that does not contain it cannot be checked by a reader.
         for quantity, _fval, _display in _measurements(text):
             for other in sorted(quantities.get(quantity, {})):
                 if other != aid:
-                    add(aid, other, "decided", quantity, [_ev(ch, f"decision on {quantity}")])
+                    add(aid, other, "decided", quantity,
+                        [_ev(ch, f"decision on {quantity}", anchor=decision.group(0))])
 
     # 4) USES-PROTOCOL: a chunk that references an SOP/protocol -> edge to a protocol/SOP artifact,
     #    matched by the captured identifier token or (fallback) any protocol-typed artifact whose

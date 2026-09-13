@@ -1,0 +1,62 @@
+{
+  "built": "2026-09-14",
+  "synonym_scopes": [
+    "EXACT"
+  ],
+  "chebi_min_stars": 2,
+  "sources": {
+    "chebi": {
+      "terms": 215629,
+      "bytes": 6886587,
+      "licence": "CC BY 4.0",
+      "attribution": "ChEBI (https://www.ebi.ac.uk/chebi/)",
+      "url": "https://ftp.ebi.ac.uk/pub/databases/chebi/flat_files/names.tsv.gz"
+    },
+    "cl": {
+      "terms": 3335,
+      "bytes": 45883,
+      "licence": "CC BY 4.0",
+      "attribution": "Cell Ontology (https://obophenotype.github.io/cell-ontology/)",
+      "url": "https://purl.obolibrary.org/obo/cl/cl-basic.obo"
+    },
+    "go": {
+      "terms": 38092,
+      "bytes": 714649,
+      "licence": "CC BY 4.0",
+      "attribution": "Gene Ontology (https://geneontology.org/)",
+      "url": "https://current.geneontology.org/ontology/go-basic.obo"
+    },
+    "hgnc": {
+      "terms": 45054,
+      "bytes": 1196127,
+      "licence": "CC0 1.0",
+      "attribution": "HUGO Gene Nomenclature Committee (https://www.genenames.org/)",
+      "url": "https://storage.googleapis.com/public-download-files/hgnc/tsv/tsv/hgnc_complete_set.txt"
+    },
+    "mondo": {
+      "terms": 32109,
+      "bytes": 818414,
+      "licence": "CC BY 4.0",
+      "attribution": "Mondo Disease Ontology (https://mondo.monarchinitiative.org/)",
+      "url": "https://purl.obolibrary.org/obo/mondo/mondo-simple.obo"
+    },
+    "uberon": {
+      "terms": 14977,
+      "bytes": 268980,
+      "licence": "CC BY 3.0",
+      "attribution": "Uberon multi-species anatomy ontology (https://obophenotype.github.io/uberon/)",
+      "url": "https://purl.obolibrary.org/obo/uberon/basic.obo"
+    },
+    "uniprot": {
+      "terms": 20431,
+      "bytes": 808895,
+      "licence": "CC BY 4.0",
+      "attribution": "UniProt (https://www.uniprot.org/)",
+      "url": "https://rest.uniprot.org/uniprotkb/stream?query=%28reviewed%3Atrue%29+AND+%28organism_id%3A9606%29&fields=accession%2Cid%2Cprotein_name%2Cgene_names&format=tsv&compressed=true"
+    }
+  },
+  "redirects": {
+    "entries": 11800,
+    "bytes": 62369
+  }
+}

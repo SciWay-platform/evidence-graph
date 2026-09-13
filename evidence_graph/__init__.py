@@ -10,7 +10,9 @@ needs a model is injected by the caller.
 Layers, roughly in the order you would use them:
 
     evidence          RetrievalHit — a passage plus the provenance needed to cite it
-    ontology          type a concept term against a controlled vocabulary
+    biolink           Biolink Model categories, predicates, and CURIE typing
+    grounding         resolve a surface string to a biomedical CURIE, or refuse
+    ontology          type a concept term against a small built-in vocabulary
     relations         propose typed document→document edges, each carrying its evidence
     conflicts         detect numeric and documented disagreement between sources
     adjudicate        assert / abstain / conflict per candidate edge, over a scorer Protocol
@@ -18,6 +20,7 @@ Layers, roughly in the order you would use them:
     evaluation        edge-level precision as a function of abstention (risk-coverage)
     graph             assemble nodes and edges into a graph payload
     provenance        W3C PROV-O derivation records with SHA-256 tamper-evidence
+    kgx               KGX interchange: Biolink-compatible TSV and JSON Lines
     fair              DataCite report, Dublin Core XML, RO-Crate 1.1 JSON-LD
     ro_crate_validation   structural validation of an RO-Crate against the 1.1 spec
 
@@ -38,6 +41,14 @@ from evidence_graph.adjudicate import (
     adjudicate,
     edge_key,
     open_questions,
+)
+from evidence_graph.biolink import (
+    BIOLINK_VERSION,
+    CATEGORIES,
+    DEFAULT_CATEGORY,
+    category_chain,
+    category_for_curie,
+    category_for_prefix,
 )
 from evidence_graph.conflicts import (
     detect_conflict,
@@ -63,6 +74,23 @@ from evidence_graph.fair import (
     ro_crate,
 )
 from evidence_graph.graph import build_project_graph
+from evidence_graph.grounding import (
+    Concept,
+    Grounding,
+    GroundingReport,
+    Vocabulary,
+    ground,
+    ground_all,
+    load_vocabulary,
+    normalize_term,
+)
+from evidence_graph.kgx import (
+    KgxGraph,
+    from_adjudications,
+    to_jsonl,
+    to_tsv,
+    validate_kgx,
+)
 from evidence_graph.maintain import (
     EdgeHistory,
     EdgeStatus,
@@ -96,8 +124,12 @@ __version__ = "0.1.0.dev0"
 __all__ = [
     "Adjudication",
     "AdjudicationResult",
+    "BIOLINK_VERSION",
+    "CATEGORIES",
+    "Concept",
     "CurvePoint",
     "DEFAULT_ASSERT_AT",
+    "DEFAULT_CATEGORY",
     "DEFAULT_PRODUCER",
     "DEFAULT_SCORER",
     "EdgeHistory",
@@ -105,8 +137,11 @@ __all__ = [
     "EdgeScorer",
     "EdgeStatus",
     "EvaluationReport",
+    "Grounding",
+    "GroundingReport",
     "GroundingScorer",
     "History",
+    "KgxGraph",
     "ONTOLOGY_TYPES",
     "PROV_SCHEMA_VERSION",
     "Producer",
@@ -114,10 +149,14 @@ __all__ = [
     "RetrievalHit",
     "Revision",
     "Verdict",
+    "Vocabulary",
     "adjudicate",
     "answer_lineage",
     "baseline_precision",
     "build_project_graph",
+    "category_chain",
+    "category_for_curie",
+    "category_for_prefix",
     "changelog",
     "classify_concept",
     "compute_checksum",
@@ -133,9 +172,14 @@ __all__ = [
     "fair_record",
     "fair_report",
     "finalize",
+    "from_adjudications",
+    "ground",
+    "ground_all",
     "lineage_report",
     "live_edges",
+    "load_vocabulary",
     "normalize_entity",
+    "normalize_term",
     "open_questions",
     "prov_jsonld",
     "prov_jsonld_nodes",
@@ -144,7 +188,10 @@ __all__ = [
     "risk_coverage",
     "risk_coverage_svg",
     "ro_crate",
+    "to_jsonl",
+    "to_tsv",
     "trace_lineage",
+    "validate_kgx",
     "validate_ro_crate",
     "verify_checksum",
     "verify_lineage",

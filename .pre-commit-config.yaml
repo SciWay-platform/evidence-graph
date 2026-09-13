@@ -17,7 +17,10 @@ repos:
       - id: check-case-conflict
       - id: detect-private-key
       - id: check-added-large-files
-        args: ["--maxkb=512"]
+        # 8 MB, to admit the vendored vocabulary files under evidence_graph/data/ (ChEBI is ~6.9 MB).
+        # Code and fixtures should stay far below this; if a source file approaches it, something
+        # that belongs in a build step has been committed instead.
+        args: ["--maxkb=8192"]
 
   - repo: https://github.com/gitleaks/gitleaks
     rev: v8.30.1

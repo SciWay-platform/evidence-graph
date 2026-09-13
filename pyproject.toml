@@ -38,6 +38,9 @@ Issues = "https://github.com/SciWay-platform/evidence-graph/issues"
 
 [tool.hatch.build.targets.wheel]
 packages = ["evidence_graph"]
+# The vocabulary is not an optional extra: without it `grounding` silently resolves nothing.
+artifacts = ["evidence_graph/data/*.tsv.gz", "evidence_graph/data/NOTICE",
+             "evidence_graph/data/MANIFEST.json"]
 
 [tool.ruff]
 line-length = 110

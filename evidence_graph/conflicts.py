@@ -105,9 +105,22 @@ def _question_matches_quantity(quantity: str, unit: str, q_tokens: set[str]) -> 
 
 _WORD = re.compile(r"[a-z0-9]+")
 # Tokens that are almost always connective noise rather than a measured quantity.
+#
+# Widened after a real corpus produced "quantities" called `pmc`, `igg`, `after`, `than` and `mabs`:
+# any word followed by a number matches the bare-label grammar, so identifiers (PMC12345), isotype
+# names (IgG1) and ordinary prose all parsed as measurements and then linked unrelated documents.
 _LABEL_STOP = frozenset(
     "the a an and or of to in at on for was were is are be been by from with as it this that "
-    "about around over under up down day days week weeks year years no not n round table figure fig".split()
+    "about around over under up down day days week weeks year years no not n round table figure fig "
+    # prose connectives that precede a number
+    "than then when while after before during since until between among within without across "
+    "more less most least above below up to approximately approx circa about nearly almost only "
+    "all both each either neither such same other another following above-mentioned respectively "
+    # bibliographic and identifier prefixes
+    "pmc pmid doi isbn issn vol volume no issue page pages pp fig figs eq eqs ref refs chapter "
+    "et al ibid supplementary supplement appendix "
+    # antibody/biologic naming that is an identity, not a measurement
+    "igg iga igm ige igd fab fc mab mabs adc scfv cho hek".split()
 )
 _QSTOP = frozenset(
     "the a an and or of to in at on for was were is are be what which who how why when where did do "
