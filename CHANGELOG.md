@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.1.1 — 2026-11-03
+
+The first release on PyPI. Packaging only: the library code is the same as in 0.1.0, which was
+tagged but never uploaded.
+
+### Changed
+
+- `pip install evidence-graph` works. Releases are uploaded by `.github/workflows/release.yml`
+  through PyPI Trusted Publishing, so no upload token exists in the repository or its secrets.
+- Added the `py.typed` marker. The `Typing :: Typed` classifier already claimed the package was
+  typed, but without the marker type checkers ignored its annotations.
+- Dropped the `License ::` classifier. `license = "Apache-2.0"` is the PEP 639 declaration, and
+  the classifier is deprecated next to it.
+- README links are absolute, so they also resolve on the PyPI project page.
+
 ## 0.1.0 — 2026-09-14
 
 First release. Extracted from [SciWay](https://sciway.software), then extended with the pieces a
