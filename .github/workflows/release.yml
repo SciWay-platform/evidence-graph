@@ -1,0 +1,52 @@
+name: Release
+
+# Publishing a GitHub release uploads that version to PyPI. Trusted Publishing (OIDC) does the
+# upload, so there is no API token anywhere: PyPI accepts it only from this workflow file, in this
+# repository, running in the `pypi` environment, as registered on the project's publishing page.
+# A failed upload is retried with "Re-run failed jobs"; the built files are reused, not rebuilt.
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - name: Tag matches the package version
+        # PyPI never lets a version be replaced, only yanked, so a mismatch is caught here.
+        run: |
+          version=$(python -c "import tomllib; print(tomllib.load(open('pyproject.toml', 'rb'))['project']['version'])")
+          if [ "v${version}" != "${GITHUB_REF_NAME}" ]; then
+            echo "release tag ${GITHUB_REF_NAME} does not match pyproject version ${version}"; exit 1
+          fi
+      - run: python -m unittest discover -s tests
+      - run: python scripts/check_no_runtime_deps.py
+      - run: pip install build twine
+      - run: python -m build
+      - run: twine check --strict dist/*
+      - uses: actions/upload-artifact@v7
+        with:
+          name: dist
+          path: dist/
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/project/evidence-graph/
+    permissions:
+      id-token: write   # the OIDC token PyPI exchanges for a short-lived upload credential
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          name: dist
+          path: dist/
+      - uses: pypa/gh-action-pypi-publish@release/v1

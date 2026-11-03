@@ -24,7 +24,7 @@ Layers, roughly in the order you would use them:
     fair              DataCite report, Dublin Core XML, RO-Crate 1.1 JSON-LD
     ro_crate_validation   structural validation of an RO-Crate against the 1.1 spec
 
-Status: 0.1.0. The API will change. See CONTRIBUTING.md for what belongs here.
+Status: 0.1.1. The API will change. See CONTRIBUTING.md for what belongs here.
 """
 
 from __future__ import annotations
@@ -119,7 +119,7 @@ from evidence_graph.provenance import (
 from evidence_graph.relations import extract_typed_relations, normalize_entity
 from evidence_graph.ro_crate_validation import validate_ro_crate
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 
 __all__ = [
     "Adjudication",

@@ -4,8 +4,8 @@ Build knowledge graphs whose edges carry their evidence, or abstain from asserti
 
 [![CI](https://github.com/SciWay-platform/evidence-graph/actions/workflows/ci.yml/badge.svg)](https://github.com/SciWay-platform/evidence-graph/actions/workflows/ci.yml)
 [![Security](https://github.com/SciWay-platform/evidence-graph/actions/workflows/security.yml/badge.svg)](https://github.com/SciWay-platform/evidence-graph/actions/workflows/security.yml)
-[![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
-[![Python](https://img.shields.io/badge/python-3.11%2B-blue.svg)](pyproject.toml)
+[![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](https://github.com/SciWay-platform/evidence-graph/blob/main/LICENSE)
+[![Python](https://img.shields.io/badge/python-3.11%2B-blue.svg)](https://github.com/SciWay-platform/evidence-graph/blob/main/pyproject.toml)
 
 Most pipelines that turn documents into a knowledge graph optimise recall: a model reads text and
 emits triples. Over scientific literature that produces graphs a researcher cannot act on, because
@@ -22,8 +22,10 @@ socket and never reads a credential.
 ## Install
 
 ```bash
-pip install evidence-graph        # not yet published; see Status
+pip install evidence-graph
 ```
+
+The wheel is about 11 MB, nearly all of it the vendored vocabulary, and installs nothing else.
 
 Or clone it. There is no build step, and the tests run with no install:
 
@@ -79,6 +81,8 @@ are quoted back with their page references so a reader can check the claim again
 
 ## A whole corpus
 
+From a clone; the scripts ship with the repository, not the wheel.
+
 ```bash
 # Build a corpus from the PubMed Central Open Access subset on AWS Open Data (no credentials).
 python scripts/fetch_pmc_corpus.py --query "protein aggregation monoclonal antibody formulation" \
@@ -99,8 +103,10 @@ python scripts/run_pipeline.py corpora/mab-aggregation --out build/mab-aggregati
 | concepts grounded to CURIEs | 3,237 |
 | graph | 1,508 nodes, 16,357 edges, valid KGX |
 
-Real output is in [`examples/mab-aggregation/`](examples/mab-aggregation/), including five of the
-open questions with the passages the adjudicator read and why it was not convinced.
+Real output is in
+[`examples/mab-aggregation/`](https://github.com/SciWay-platform/evidence-graph/tree/main/examples/mab-aggregation/),
+including five of the open questions with the passages the adjudicator read and why it was not
+convinced.
 
 ## What is in it
 
@@ -160,9 +166,9 @@ Normalising that is a 1.0 change, so it is documented here rather than fixed qui
 `evidence_graph/data/` holds the vocabulary as gzipped TSV, built by `scripts/build_vocabulary.py`
 from MONDO, GO, ChEBI, UBERON, CL, HGNC and UniProt. That data is **not** covered by this project's
 Apache-2.0 licence: each source keeps its own (CC0, CC BY 4.0, CC BY 3.0). Sources, attributions and
-a statement of the modifications made are in [`evidence_graph/data/NOTICE`](evidence_graph/data/NOTICE).
+a statement of the modifications made are in [`evidence_graph/data/NOTICE`](https://github.com/SciWay-platform/evidence-graph/blob/main/evidence_graph/data/NOTICE).
 
-**RetrievalHit**: see [`evidence.py`](evidence_graph/evidence.py).
+**RetrievalHit**: see [`evidence.py`](https://github.com/SciWay-platform/evidence-graph/blob/main/evidence_graph/evidence.py).
 
 ## What it deliberately does not do
 
@@ -189,16 +195,16 @@ it misses everything stated in prose without a number in it.
 
 ## Status
 
-**0.1.0.** The API will change and there is no support SLA. It is extracted from
+**0.1.1.** The API will change and there is no support SLA. It is extracted from
 [SciWay](https://sciway.software), a scientific memory workspace, where this code has been running
 in production; the extraction is what makes it independently reviewable and citable.
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for scope (the boundary is strict and most review effort goes
-there), [SECURITY.md](SECURITY.md) for vulnerability reporting, and
-[CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
+See [CONTRIBUTING.md](https://github.com/SciWay-platform/evidence-graph/blob/main/CONTRIBUTING.md) for scope (the boundary is strict and most
+review effort goes there), [SECURITY.md](https://github.com/SciWay-platform/evidence-graph/blob/main/SECURITY.md) for vulnerability reporting, and
+[CODE_OF_CONDUCT.md](https://github.com/SciWay-platform/evidence-graph/blob/main/CODE_OF_CONDUCT.md).
 
 ## Licence
 
-[Apache-2.0](LICENSE). Code adapted from other projects is attributed in [NOTICE](NOTICE).
+[Apache-2.0](https://github.com/SciWay-platform/evidence-graph/blob/main/LICENSE). Code adapted from other projects is attributed in [NOTICE](https://github.com/SciWay-platform/evidence-graph/blob/main/NOTICE).
